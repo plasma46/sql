@@ -9,7 +9,7 @@ conn = sqlite3.connect("db.db")  # или :memory: чтобы сохранить
 cursor = conn.cursor()
 
 
-def update_sqllite():
+def update_sqllite(id,req,times):
     cursor.execute("INSERT INTO `users` (`user_id`, `request`,'timestamp') VALUES(?,?,?)",
                    (id, req, times))
 
