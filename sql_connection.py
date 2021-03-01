@@ -9,13 +9,14 @@ password = 'Dima070193'
 
 cnxn = pyodbc.connect(
     'DRIVER={SQL Server Native Client 11.0};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
-cursor = cnxn.cursor()
+with cnxn:
+    cursor = cnxn.cursor()
 
 
 
-def read_sql():
+def read_sql(connect):
     a = bot_tele.id_client
-    df = pd.read_sql_query(f"SELECT TOP 10*  FROM [3].[Customers] WHERE TSC_Customer_ID = {a} ", cnxn)
+    df = pd.read_sql_query(f"SELECT TOP 10*  FROM [3].[Customers] WHERE TSC_Customer_ID = {a} ", connect)
     print(df)
     return df
 
