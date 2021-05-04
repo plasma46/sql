@@ -10,8 +10,8 @@ times = datetime.datetime.now()
 token = '1660932890:AAHXbNz9JQIpiGAU6eGoSaSkeMzd6P_fFqI'
 bot = telebot.TeleBot(token)
 
-# подключение к локальной базе, check_same_thread=False без этого параметра ошибка трэда
 
+# подключение к локальной базе, check_same_thread=False без этого параметра ошибка трэда
 
 
 # Бот реагирует на любое сообщение и предлагает ввести id для запроса в БД.
@@ -41,16 +41,16 @@ def id_client(message):
         return
     global user
     user = message.from_user.id
-    print(message.from_user.id) # id пользователя для записи в базу
-    global  df
+    print(message.from_user.id)  # id пользователя для записи в базу
+    global df
     df = pd.read_sql_query(f"SELECT TOP 10*  FROM [3].[Customers] WHERE TSC_Customer_ID = {text} ",
-                           sql_connection.cnxn) # sql запрос в DataFrame
+                           sql_connection.cnxn)  # sql запрос в DataFrame
     writer = pd.ExcelWriter('C:\\Users\\Dmich\\Desktop\\output.xlsx', engine='xlsxwriter')
     df.to_excel(writer, 'Sheet1')
     writer.save()
     doc = open('C:\\Users\\Dmich\\Desktop\\output.xlsx', 'rb')
-    bot.send_document(message.chat.id, doc) # Отправка excel обратно пользователю в чат
-    sqllite.update_sql(user, text, times) # Запись логов на локалку
+    bot.send_document(message.chat.id, doc)  # Отправка excel обратно пользователю в чат
+    sqllite.update_sql(user, text, times)  # Запись логов на локалку
 
 
 # def save_link(message):
